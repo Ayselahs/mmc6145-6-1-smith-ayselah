@@ -16,9 +16,10 @@ export default withIronSessionApiRoute(
     switch (req.method) {
       case 'POST':
         try {
-          const postBook = JSON.parse(req.body)
+
           //console.log('Post', postBook)
-          const addBook = await db.book.add(req.session.user.id, postBook)
+          const addBook = await db.book.add(req.session.user.id, req.body)
+          console.log
           //console.log('Add', addBook)
           if (!addBook) {
             req.session.destroy()
@@ -32,8 +33,9 @@ export default withIronSessionApiRoute(
         }
       case 'DELETE':
         try {
-          const deleteBook = JSON.parse(req.body)
-          const removeBook = await db.book.remove(req.session.user.id, deleteBook.id)
+
+
+          const removeBook = await db.book.remove(req.session.user.id, req.body.id)
           if (!removeBook) {
             req.session.destroy()
             return res.status(401).json({ error: 'User not found' })
